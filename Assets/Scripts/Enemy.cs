@@ -1,0 +1,172 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    Rigidbody enemyRigidbody;
+    public Transform targetTransform; // target object which is the player
+    public float speed;
+    public float jumpSpeed;
+    public float jumpHeight;
+    public float rotationSpeed;
+    public float boostSpeed;
+    float boostDuration;
+    float normalSpeed;
+    Vector3 jumpHeightAmount;
+    Vector3 jumpTotal;
+    Vector3 velocity;
+    Vector3 displacementFromTarget;
+    bool inGround;
+    bool boostStatus;
+
+    void Start()
+    {
+        enemyRigidbody = GetComponent<Rigidbody>();
+        jumpHeightAmount = new Vector3(0, jumpHeight, 0);
+        normalSpeed = speed;
+    }
+
+    private void OnCollisionEnter(Collision checkCollision)
+    {
+        if(checkCollision.gameObject.CompareTag("Ground"))
+        {
+            inGround = true;
+        }
+
+        if (checkCollision.gameObject.CompareTag("Wall") && boostStatus) // this needs to be here to avoid this shit from bouncing all the time
+        {
+            enemyRigidbody.AddForce(-velocity, ForceMode.Impulse);
+            Boost();
+        }
+            
+    }
+
+    private void OnTriggerEnter(Collider triggerBoost)
+    {
+        if (triggerBoost.tag == "Boost")
+        {
+            speed = boostSpeed;
+            boostStatus = true;
+        }
+
+    }
+
+    void Boost()
+    {
+        speed = normalSpeed;
+        boostDuration = 0;
+        boostStatus = false;
+    }
+
+    void RayDetectWalls () // this will be change into enemy detecting objects like walls
+    {
+        float raySize = 2.5f;
+        //float capsuleRad = 1f;
+        
+        bool detectWall = Physics.Raycast(enemyRigidbody.position, transform.forward, out RaycastHit wallDetected, raySize); // this is what raycast looks like
+
+        //bool detectWall = Physics.CapsuleCast(enemyRigidbody.position, Vector3.forward, capsuleRad, Vector3.forward, out RaycastHit wallDetected);
+
+        Debug.DrawRay(enemyRigidbody.position, transform.forward, Color.red); // dunno it doesn't work atleast there is a line xD
+
+        if (detectWall) // check if true which is true anyway
+        {
+           if (wallDetected.collider.gameObject.layer == 6) // check if layer number is 6 since the aim is to avoid this wall and this use to be gameObject.tag == "Wall"
+           {
+               float velocityX = velocity.x; // take x value of velocuty and set it into velocityX
+               velocityX *= -1; // multiply to -1 to change direction
+
+               velocity = new Vector3(velocityX, 0, 0); // create a new instance of velocity with the new value of velocity.x which is in velocityX variable
+
+               enemyRigidbody.position += velocity * Time.fixedDeltaTime; // change position with the new velocity
+
+               WhereToLook(velocity); // look direction with the new value of velocity
+               print("Detected");
+           }
+
+        }
+
+    }
+
+    void WhereToLook (Vector3 lookDirection) // function for rotation 
+    {
+        Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up);
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        displacementFromTarget = targetTransform.position - transform.position;
+        Vector3 directionToTarget = displacementFromTarget.normalized;
+        velocity = directionToTarget * speed;
+        jumpTotal = jumpHeightAmount * jumpSpeed;
+
+        /*float timer = 0;
+        float raycastInterval = 1.5f;
+
+        timer += Time.deltaTime;*/
+        RayDetectWalls(); // call this function
+
+        // Vector3 moveAmount = velocity * Time.deltaTime;
+
+        // float distanceToPlayer = displacementFromTarget.magnitude;
+
+        /* if (distanceToPlayer > 1.5f)
+         * {
+         *      transform.Translate (moveAmount);
+         * }
+         */
+
+    }
+
+    /*Vector3 MoveDir ()
+    {
+        enemyRigidbody.position += velocity * Time.deltaTime;
+
+        if (velocity != Vector3.zero)
+        {
+            Quaternion whereToLook = Quaternion.LookRotation(velocity, Vector3.up);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
+        }
+
+        return enemyRigidbody.position;
+    } */
+
+    void FixedUpdate()
+    {
+        float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
+
+        if (distanceToPlayer > 1.5f) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
+        {
+            enemyRigidbody.position += velocity * Time.deltaTime;
+
+            if (velocity != Vector3.zero)
+            {
+                WhereToLook(velocity);
+            } 
+
+            if(boostStatus)
+            {
+                boostDuration += Time.deltaTime;
+                if(boostDuration >= 1)
+                {
+                    Boost();
+                }
+            }
+
+        }
+
+        if (displacementFromTarget.y > 0.1f && distanceToPlayer < 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+        {
+            enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
+            inGround = false;
+        }
+    }
+}
