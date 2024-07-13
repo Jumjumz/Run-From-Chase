@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
     {
         float raySize = 2.5f;
         //float capsuleRad = 1f;
-        
+       
         bool detectWall = Physics.Raycast(enemyRigidbody.position, transform.forward, out RaycastHit wallDetected, raySize); // this is what raycast looks like
 
         //bool detectWall = Physics.CapsuleCast(enemyRigidbody.position, Vector3.forward, capsuleRad, Vector3.forward, out RaycastHit wallDetected);
@@ -84,13 +84,24 @@ public class Enemy : MonoBehaviour
 
                enemyRigidbody.position += velocity * Time.fixedDeltaTime; // change position with the new velocity
 
-               WhereToLook(velocity); // look direction with the new value of velocity
+               WhereToLook(enemyRigidbody.position); // look direction with the new value of velocity
                print("Detected");
-           }
-
+            }
+            
         }
-
+        
     }
+
+    /*IEnumerator WallChecker()
+    {
+        WaitForSeconds rayTimeDelay = new WaitForSeconds(1f);
+
+        while (true)
+        {
+            yield return rayTimeDelay;
+            RayDetectWalls();
+        }
+    }*/
 
     void WhereToLook (Vector3 lookDirection) // function for rotation 
     {
