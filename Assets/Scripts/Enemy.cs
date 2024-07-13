@@ -65,9 +65,11 @@ public class Enemy : MonoBehaviour
     void RayDetectWalls () // this will be change into enemy detecting objects like walls
     {
         float raySize = 2.5f;
+        //Vector3 localRayCastZ = new Vector3(0, 0, 2.5f);
         //float capsuleRad = 1f;
        
         bool detectWall = Physics.Raycast(enemyRigidbody.position, transform.forward, out RaycastHit wallDetected, raySize); // this is what raycast looks like
+        //bool rayCastZ = Physics.Raycast(enemyRigidbody.position, localRayCastZ, out RaycastHit detectZ, raySize);
 
         //bool detectWall = Physics.CapsuleCast(enemyRigidbody.position, Vector3.forward, capsuleRad, Vector3.forward, out RaycastHit wallDetected);
 
@@ -77,15 +79,30 @@ public class Enemy : MonoBehaviour
         {
            if (wallDetected.collider.gameObject.layer == 6) // check if layer number is 6 since the aim is to avoid this wall and this use to be gameObject.tag == "Wall"
            {
-               float velocityX = velocity.x; // take x value of velocuty and set it into velocityX
-               velocityX *= -1; // multiply to -1 to change direction
+                float velocityX = velocity.x; // take x value of velocuty and set it into velocityX
+                float localX = transform.localPosition.x;
+                float localZ = transform.localPosition.z;
+                //float globalZ = transform.position.z;
+                //float velocityZ = velocity.z;
+                //velocityX *= -1; // multiply to -1 to change direction
+                //velocityZ *= -1;
+                wallDetected.distance = localZ + raySize;
 
-               velocity = new Vector3(velocityX, 0, 0); // create a new instance of velocity with the new value of velocity.x which is in velocityX variable
+                if(wallDetected.distance >= localZ)
+                {
+                    velocityX *= -1;
+                    velocity = new Vector3(localX, 0, wallDetected.distance); // change velocity to local x and walldetected distance
+                    enemyRigidbody.position += velocity * Time.fixedDeltaTime; // to move with the new instance of velocity
 
-               enemyRigidbody.position += velocity * Time.fixedDeltaTime; // change position with the new velocity
+                    WhereToLook(velocity); // rotate towards the new velocity
+                }
 
-               WhereToLook(enemyRigidbody.position); // look direction with the new value of velocity
-               print("Detected");
+                /*velocity = new Vector3(localX, 0, 0); // create a new instance of velocity with the new value of velocity.x which is in velocityX variable
+
+                enemyRigidbody.position += velocity * Time.fixedDeltaTime; // change position with the new velocity
+
+                WhereToLook(velocity); // look direction with the new value of velocity*/
+                print("Detected");
             }
             
         }
@@ -103,7 +120,7 @@ public class Enemy : MonoBehaviour
         }
     }*/
 
-    void WhereToLook (Vector3 lookDirection) // function for rotation 
+    void WhereToLook (Vector3 lookDirection) // function for rotation -- face towards the direction where moving
     {
         Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up);
 
