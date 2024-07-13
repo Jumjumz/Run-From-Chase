@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
 
                 if(wallDetected.distance >= localZ)
                 {
-                    velocityX *= -1;
+                    velocityX *= -1; // multiply to -1 to change direction
                     velocity = new Vector3(localX, 0, wallDetected.distance); // change velocity to local x and walldetected distance
                     enemyRigidbody.position += velocity * Time.fixedDeltaTime; // to move with the new instance of velocity
 
