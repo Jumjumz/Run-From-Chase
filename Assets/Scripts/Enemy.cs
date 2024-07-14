@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Enemy : MonoBehaviour
     public float jumpHeight;
     public float rotationSpeed;
     public float boostSpeed;
+    private NavMeshAgent enemyAgent;
     float boostDuration;
     float normalSpeed;
     Vector3 jumpHeightAmount;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyRigidbody = GetComponent<Rigidbody>();
+        enemyAgent = GetComponent<NavMeshAgent>();
         jumpHeightAmount = new Vector3(0, jumpHeight, 0);
         normalSpeed = speed;
     }
@@ -50,6 +53,7 @@ public class Enemy : MonoBehaviour
         if (triggerBoost.tag == "Boost")
         {
             speed = boostSpeed;
+            enemyAgent.speed = boostSpeed;
             boostStatus = true;
         }
 
@@ -58,9 +62,11 @@ public class Enemy : MonoBehaviour
     void Boost()
     {
         speed = normalSpeed;
+        //enemyAgent.speed = normalSpeed;
         boostDuration = 0;
         boostStatus = false;
     }
+
 
     void RayDetectWalls () // this will be change into enemy detecting objects like walls
     {
@@ -125,6 +131,22 @@ public class Enemy : MonoBehaviour
         Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up);
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
+    }
+
+    void enemyAIMovement()
+    {
+        enemyAgent.speed = speed;
+        enemyAgent.velocity = velocity;
+
+        if (boostStatus)
+        {
+            boostDuration += Time.deltaTime;
+            if (boostDuration >= 1)
+            {
+                Boost();
+            }
+        }
+        //enemyAgent.destination = targetTransform.position; // auto follow the player
     }
 
     // Update is called once per frame
