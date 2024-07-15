@@ -135,8 +135,9 @@ public class Enemy : MonoBehaviour
 
     void enemyAIMovement()
     {
-        enemyAgent.speed = speed;
-        enemyAgent.velocity = velocity;
+        //enemyAgent.speed = speed;
+        //enemyAgent.velocity = velocity;
+        enemyAgent.destination = targetTransform.position;
 
         if (boostStatus)
         {
@@ -161,7 +162,7 @@ public class Enemy : MonoBehaviour
         float raycastInterval = 1.5f;
 
         timer += Time.deltaTime;*/
-        RayDetectWalls(); // call this function
+        //RayDetectWalls(); // call this function
 
         // Vector3 moveAmount = velocity * Time.deltaTime;
 
@@ -192,10 +193,12 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
+        enemyAIMovement();
 
-        if (distanceToPlayer > 1.5f) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
+		if (distanceToPlayer > 1.5f) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
-            enemyRigidbody.position += velocity * Time.deltaTime;
+            //enemyRigidbody.position += velocity * Time.deltaTime;
+            
 
             if (velocity != Vector3.zero)
             {
