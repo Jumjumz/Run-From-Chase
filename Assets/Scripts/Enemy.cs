@@ -181,14 +181,17 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
-        enemyAIMovement();
+        //float distanceAI = enemyAgent.destination.magnitude;
+        //float distanceAI = targetTransform.position.magnitude;
+        float stopDistance = enemyAgent.stoppingDistance;
+		
 
-		if (distanceToPlayer > 1.5f) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
+		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
-            //enemyRigidbody.position += velocity * Time.deltaTime;
-            
+			//enemyRigidbody.position += velocity * Time.deltaTime;
+			enemyAIMovement(); // call this method where AI movement is 
 
-            if (velocity != Vector3.zero)
+			if (velocity != Vector3.zero)
             {
                 WhereToLook(velocity);
             } 
@@ -204,7 +207,7 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if (displacementFromTarget.y > 0.1f && distanceToPlayer < 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+        if ( /*displacementFromTarget.y > 0 && */ targetTransform.position.y > 0.1f && stopDistance <= 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
         {
             enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
             inGround = false;
