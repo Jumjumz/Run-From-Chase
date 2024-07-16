@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour
         boostStatus = false;
     }
 
-
     void RayDetectWalls () // this will be change into enemy detecting objects like walls
     {
         float raySize = 2.5f;
@@ -114,17 +113,6 @@ public class Enemy : MonoBehaviour
         }
         
     }
-
-    /*IEnumerator WallChecker()
-    {
-        WaitForSeconds rayTimeDelay = new WaitForSeconds(1f);
-
-        while (true)
-        {
-            yield return rayTimeDelay;
-            RayDetectWalls();
-        }
-    }*/
 
     void WhereToLook (Vector3 lookDirection) // function for rotation -- face towards the direction where moving
     {
