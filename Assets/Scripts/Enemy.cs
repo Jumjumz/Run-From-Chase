@@ -25,10 +25,13 @@ public class Enemy : MonoBehaviour
     bool inGround;
     bool boostStatus;
 
-    void Start()
+	private void Awake() // used awake for navmesh agent
+	{
+		enemyAgent = GetComponent<NavMeshAgent>();
+	}
+	void Start()
     {
         enemyRigidbody = GetComponent<Rigidbody>();
-        enemyAgent = GetComponent<NavMeshAgent>();
         jumpHeightAmount = new Vector3(0, jumpHeight, 0);
         normalSpeed = speed;
     }
@@ -62,7 +65,7 @@ public class Enemy : MonoBehaviour
     void Boost()
     {
         speed = normalSpeed;
-        //enemyAgent.speed = normalSpeed;
+        enemyAgent.speed = normalSpeed;
         boostDuration = 0;
         boostStatus = false;
     }
@@ -125,7 +128,7 @@ public class Enemy : MonoBehaviour
     {
         //enemyAgent.speed = speed;
         //enemyAgent.velocity = velocity;
-        enemyAgent.destination = targetTransform.position;
+        enemyAgent.SetDestination(targetTransform.position);
 
         if (boostStatus)
         {
@@ -207,7 +210,7 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if ( /*displacementFromTarget.y > 0 && */ targetTransform.position.y > 0.1f && stopDistance <= 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+        if ( /*displacementFromTarget.y > 0.1 && */ targetTransform.position.y > 0.1f && stopDistance <= 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
         {
             enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
             inGround = false;
