@@ -144,10 +144,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*displacementFromTarget = targetTransform.position - transform.position;
+        displacementFromTarget = targetTransform.position - transform.position;
         Vector3 directionToTarget = displacementFromTarget.normalized;
         velocity = directionToTarget * speed;
-        jumpTotal = jumpHeightAmount * jumpSpeed;*/
+        jumpTotal = jumpHeightAmount * jumpSpeed;
 
         /*float timer = 0;
         float raycastInterval = 1.5f;
