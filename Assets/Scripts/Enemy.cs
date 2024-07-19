@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour
 
     void WhereToLook (Vector3 lookDirection) // function for rotation -- face towards the direction where moving
     {
-        Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up);
+        Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up); 
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
     }
@@ -194,9 +194,9 @@ public class Enemy : MonoBehaviour
 			//enemyRigidbody.position += velocity * Time.deltaTime;
 			enemyAIMovement(); // call this method where AI movement is 
 
-			if (velocity != Vector3.zero)
+			if (enemyAgent.velocity != Vector3.zero)
             {
-                WhereToLook(velocity);
+                WhereToLook(enemyAgent.velocity);
             } 
 
             if(boostStatus)
@@ -210,7 +210,7 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if ( /*displacementFromTarget.y > 0.1 && */ targetTransform.position.y > 0.1f && stopDistance <= 1.5f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+        if ( /*displacementFromTarget.y > 0.1 && */ targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
         {
             enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
             inGround = false;
