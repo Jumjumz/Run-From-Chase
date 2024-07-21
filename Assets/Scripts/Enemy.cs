@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         if(checkCollision.gameObject.CompareTag("Ground"))
         {
             inGround = true;
+            enemyAgent.enabled = true;
         }
 
         if (checkCollision.gameObject.CompareTag("Wall") && boostStatus) // this needs to be here to avoid this shit from bouncing all the time
@@ -141,6 +142,7 @@ public class Enemy : MonoBehaviour
         //enemyAgent.destination = targetTransform.position; // auto follow the player
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -149,23 +151,24 @@ public class Enemy : MonoBehaviour
         velocity = directionToTarget * speed;
         jumpTotal = jumpHeightAmount * jumpSpeed;
 
-        /*float timer = 0;
+
+		/*float timer = 0;
         float raycastInterval = 1.5f;
 
         timer += Time.deltaTime;*/
-        //RayDetectWalls(); // call this function
+		//RayDetectWalls(); // call this function
 
-        // Vector3 moveAmount = velocity * Time.deltaTime;
+		// Vector3 moveAmount = velocity * Time.deltaTime;
 
-        // float distanceToPlayer = displacementFromTarget.magnitude;
+		// float distanceToPlayer = displacementFromTarget.magnitude;
 
-        /* if (distanceToPlayer > 1.5f)
+		/* if (distanceToPlayer > 1.5f)
          * {
          *      transform.Translate (moveAmount);
          * }
          */
 
-    }
+	}
 
     /*Vector3 MoveDir ()
     {
@@ -210,10 +213,12 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if ( /*displacementFromTarget.y > 0.1 && */ targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
-        {
-            enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
-            inGround = false;
-        }
-    }
+		if (targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+		{
+			enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
+			inGround = false;
+			enemyAgent.enabled = false;
+		}
+
+	}
 }
