@@ -171,20 +171,6 @@ public class Enemy : MonoBehaviour
 
 	}
 
-	/*Vector3 MoveDir ()
-    {
-        enemyRigidbody.position += velocity * Time.deltaTime;
-
-        if (velocity != Vector3.zero)
-        {
-            Quaternion whereToLook = Quaternion.LookRotation(velocity, Vector3.up);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
-        }
-
-        return enemyRigidbody.position;
-    } */
-
 	void FixedUpdate()
     {
         float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
@@ -193,7 +179,6 @@ public class Enemy : MonoBehaviour
         float stopDistance = enemyAgent.stoppingDistance;
 
 		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why
-        WhereToLook(enemyRigidbody.position);
 
 		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
@@ -209,18 +194,18 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-			if (targetTransform.position.y > 0.1f && inGround && distanceToPlayer <= 3f) // check if player is above ground and is 1.5f away so it only jump at that distance
+		}
+
+		if (targetTransform.position.y > 0.1f && inGround && distanceToPlayer <= 3f) // check if player is above ground and is 1.5f away so it only jump at that distance
+		{
+			inGround = false;
+			enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
+
+			if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
 			{
-				inGround = false;
-				enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
-
-				if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
-                {
-					enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
-					//WhereToLook(velocity);
-				}
+				enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
+				WhereToLook(velocity);
 			}
-
 		}
 
 
