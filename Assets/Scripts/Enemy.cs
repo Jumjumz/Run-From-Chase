@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour
     {
         //enemyAgent.speed = speed;
         //enemyAgent.velocity = velocity;
-        enemyAgent.SetDestination(targetTransform.position);
+        enemyAgent.SetDestination(targetTransform.position); // set agent destination to the player position
 
         if (boostStatus)
         {
@@ -151,24 +151,15 @@ public class Enemy : MonoBehaviour
 		velocity = directionToTarget * speed;
 		jumpTotal = jumpHeightAmount * jumpSpeed;
 
-		enemyRigidbody.position += velocity * Time.deltaTime;
+		//enemyRigidbody.position += velocity * Time.deltaTime;
 	}
 
 
     // Update is called once per frame
     void Update()
     {
-		if (targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
-		{
-			inGround = false;
-			enemyAgent.enabled = false;
 
-			if (enemyAgent.enabled == false)
-			{
-                enemyMoveWhenJump();
-				enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
-			}
-		}
+		enemyMoveWhenJump();
 
 		/*float timer = 0;
         float raycastInterval = 1.5f;
@@ -208,11 +199,12 @@ public class Enemy : MonoBehaviour
         //float distanceAI = enemyAgent.destination.magnitude;
         //float distanceAI = targetTransform.position.magnitude;
         float stopDistance = enemyAgent.stoppingDistance;
-		
+
+		enemyRigidbody.position += velocity * Time.deltaTime;
 
 		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
-			//enemyRigidbody.position += velocity * Time.deltaTime;
+			
 			enemyAIMovement(); // call this method where AI movement is 
 
 			if (enemyAgent.velocity != Vector3.zero)
@@ -229,7 +221,22 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-        }
+			if (targetTransform.position.y > 0.1f && inGround && distanceToPlayer <= 3f) // check if player is above ground and is 1.5f away so it only jump at that distance
+			{
+				inGround = false;
+				enemyAgent.enabled = false;
+
+				if (enemyAgent.enabled == false)
+                {
+                    if(velocity != Vector3.zero)
+                    {
+						enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
+						WhereToLook(velocity);
+					}
+				}
+			}
+
+		}
 
 
 	}
