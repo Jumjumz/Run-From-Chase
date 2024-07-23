@@ -120,11 +120,11 @@ public class Enemy : MonoBehaviour
         
     }
 
-    void WhereToLook (Vector3 lookDirection) // function for rotation -- face towards the direction where moving
+    void WhereToLook (Vector3 lookDirection) // function for rotation -- face towards the direction where the target is moving
     {
-        Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up); 
+        Quaternion whereToLook = Quaternion.LookRotation(lookDirection, Vector3.up);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, whereToLook, rotationSpeed * Time.deltaTime);
+        enemyRigidbody.rotation = Quaternion.RotateTowards(enemyRigidbody.rotation, whereToLook, rotationSpeed * Time.deltaTime);
     }
 
     void enemyAIMovement()
@@ -144,8 +144,6 @@ public class Enemy : MonoBehaviour
         }
         //enemyAgent.destination = targetTransform.position; // auto follow the player
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -195,16 +193,12 @@ public class Enemy : MonoBehaviour
         float stopDistance = enemyAgent.stoppingDistance;
 
 		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why
+        WhereToLook(enemyRigidbody.position);
 
 		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
 			
 			enemyAIMovement(); // call this method where AI movement is 
-
-			if (enemyAgent.velocity != Vector3.zero)
-            {
-                WhereToLook(enemyAgent.velocity);
-            } 
 
             if(boostStatus)
             {
@@ -223,7 +217,7 @@ public class Enemy : MonoBehaviour
 				if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
                 {
 					enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
-					WhereToLook(velocity);
+					//WhereToLook(velocity);
 				}
 			}
 
