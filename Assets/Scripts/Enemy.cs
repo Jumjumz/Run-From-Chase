@@ -1,3 +1,4 @@
+using Cinemachine.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,15 +23,16 @@ public class Enemy : MonoBehaviour
     Vector3 jumpTotal;
     Vector3 velocity;
     Vector3 displacementFromTarget;
-    bool inGround;
+	bool inGround;
     bool boostStatus;
 
-	private void Awake() // used awake for navmesh agent
+	/*private void Awake() // used awake for navmesh agent
 	{
 		enemyAgent = GetComponent<NavMeshAgent>();
-	}
+	}*/
 	void Start()
     {
+        enemyAgent = GetComponent<NavMeshAgent>();
         enemyRigidbody = GetComponent<Rigidbody>();
         jumpHeightAmount = new Vector3(0, jumpHeight, 0);
         normalSpeed = speed;
@@ -142,15 +144,31 @@ public class Enemy : MonoBehaviour
         //enemyAgent.destination = targetTransform.position; // auto follow the player
     }
 
+    void enemyMoveWhenJump ()
+    {
+		displacementFromTarget = targetTransform.position - transform.position;
+		Vector3 directionToTarget = displacementFromTarget.normalized;
+		velocity = directionToTarget * speed;
+		jumpTotal = jumpHeightAmount * jumpSpeed;
+
+		enemyRigidbody.position += velocity * Time.deltaTime;
+	}
+
 
     // Update is called once per frame
     void Update()
     {
-        displacementFromTarget = targetTransform.position - transform.position;
-        Vector3 directionToTarget = displacementFromTarget.normalized;
-        velocity = directionToTarget * speed;
-        jumpTotal = jumpHeightAmount * jumpSpeed;
+		if (targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
+		{
+			inGround = false;
+			enemyAgent.enabled = false;
 
+			if (enemyAgent.enabled == false)
+			{
+                enemyMoveWhenJump();
+				enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
+			}
+		}
 
 		/*float timer = 0;
         float raycastInterval = 1.5f;
@@ -213,12 +231,6 @@ public class Enemy : MonoBehaviour
 
         }
 
-		if (targetTransform.position.y > 0.1f && inGround) // check if player is above ground and is 1.5f away so it only jump at that distance
-		{
-			enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
-			inGround = false;
-			enemyAgent.enabled = false;
-		}
 
 	}
 }
