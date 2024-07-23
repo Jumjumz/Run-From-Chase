@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         if(checkCollision.gameObject.CompareTag("Ground"))
         {
             inGround = true;
-            enemyAgent.enabled = true;
+            enemyAgent.enabled = true; // navmeshagent is enabled when enemy is in ground.. this has autopathing
         }
 
         if (checkCollision.gameObject.CompareTag("Wall") && boostStatus) // this needs to be here to avoid this shit from bouncing all the time
@@ -144,22 +144,15 @@ public class Enemy : MonoBehaviour
         //enemyAgent.destination = targetTransform.position; // auto follow the player
     }
 
-    void enemyMoveWhenJump ()
-    {
-		displacementFromTarget = targetTransform.position - transform.position;
-		Vector3 directionToTarget = displacementFromTarget.normalized;
-		velocity = directionToTarget * speed;
-		jumpTotal = jumpHeightAmount * jumpSpeed;
-
-		//enemyRigidbody.position += velocity * Time.deltaTime;
-	}
 
 
     // Update is called once per frame
     void Update()
     {
-
-		enemyMoveWhenJump();
+		displacementFromTarget = targetTransform.position - transform.position; // rigidbody is still enabled but not used
+		Vector3 directionToTarget = displacementFromTarget.normalized; // this still works and calculates
+		velocity = directionToTarget * speed; // still work
+		jumpTotal = jumpHeightAmount * jumpSpeed; // needed for jumping
 
 		/*float timer = 0;
         float raycastInterval = 1.5f;
@@ -179,7 +172,7 @@ public class Enemy : MonoBehaviour
 
 	}
 
-    /*Vector3 MoveDir ()
+	/*Vector3 MoveDir ()
     {
         enemyRigidbody.position += velocity * Time.deltaTime;
 
@@ -193,14 +186,14 @@ public class Enemy : MonoBehaviour
         return enemyRigidbody.position;
     } */
 
-    void FixedUpdate()
+	void FixedUpdate()
     {
         float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
         //float distanceAI = enemyAgent.destination.magnitude;
         //float distanceAI = targetTransform.position.magnitude;
         float stopDistance = enemyAgent.stoppingDistance;
 
-		enemyRigidbody.position += velocity * Time.deltaTime;
+		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why
 
 		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
@@ -224,14 +217,14 @@ public class Enemy : MonoBehaviour
 			if (targetTransform.position.y > 0.1f && inGround && distanceToPlayer <= 3f) // check if player is above ground and is 1.5f away so it only jump at that distance
 			{
 				inGround = false;
-				enemyAgent.enabled = false;
+				enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
 
-				if (enemyAgent.enabled == false)
+				if (enemyAgent.enabled == false) // if disabled then we use physics and rigidbody to jump
                 {
                     if(velocity != Vector3.zero)
                     {
-						enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
-						WhereToLook(velocity);
+						enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
+						WhereToLook(targetTransform.position);
 					}
 				}
 			}
