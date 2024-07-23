@@ -131,7 +131,8 @@ public class Enemy : MonoBehaviour
     {
         //enemyAgent.speed = speed;
         //enemyAgent.velocity = velocity;
-        enemyAgent.SetDestination(targetTransform.position); // set agent destination to the player position
+        Vector3 targetWithIngoredY = new Vector3(targetTransform.position.x, 0, targetTransform.position.z);
+        enemyAgent.SetDestination(targetWithIngoredY); // set agent destination to the player position
 
         if (boostStatus)
         {
@@ -219,13 +220,10 @@ public class Enemy : MonoBehaviour
 				inGround = false;
 				enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
 
-				if (enemyAgent.enabled == false) // if disabled then we use physics and rigidbody to jump
+				if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
                 {
-                    if(velocity != Vector3.zero)
-                    {
-						enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
-						WhereToLook(targetTransform.position);
-					}
+					enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
+					WhereToLook(velocity);
 				}
 			}
 
