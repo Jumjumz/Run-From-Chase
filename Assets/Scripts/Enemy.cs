@@ -131,8 +131,9 @@ public class Enemy : MonoBehaviour
     {
         //enemyAgent.speed = speed;
         //enemyAgent.velocity = velocity;
-        Vector3 targetWithIngoredY = new Vector3(targetTransform.position.x, 0, targetTransform.position.z);
-        enemyAgent.SetDestination(targetWithIngoredY); // set agent destination to the player position
+        //Vector3 targetWithIngoredY = new Vector3(targetTransform.position.x, 0, targetTransform.position.z);
+        //enemyAgent.SetDestination(targetWithIngoredY); // set agent destination to the player position
+        enemyAgent.SetDestination(targetTransform.position);
 
         if (boostStatus)
         {
