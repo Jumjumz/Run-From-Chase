@@ -153,6 +153,8 @@ public class Enemy : MonoBehaviour
 		velocity = directionToTarget * speed; // still work
 		jumpTotal = jumpHeightAmount * jumpSpeed; // needed for jumping
 
+        //WhereToLook(velocity);
+
 		/*float timer = 0;
         float raycastInterval = 1.5f;
 
@@ -178,7 +180,8 @@ public class Enemy : MonoBehaviour
         //float distanceAI = targetTransform.position.magnitude;
         float stopDistance = enemyAgent.stoppingDistance;
 
-		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why
+		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why it needs to be here
+        WhereToLook(velocity); // look towards the target. This works dunno why it needs to be here though
 
 		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
@@ -203,8 +206,7 @@ public class Enemy : MonoBehaviour
 
 			if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
 			{
-				enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse); // jump mech 
-				WhereToLook(velocity);
+                enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
 			}
 		}
 
