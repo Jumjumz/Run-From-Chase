@@ -517,9 +517,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 205c0000
-    m_LastClickedID: 23584
-    m_ExpandedIDs: 00000000fe5b000000ca9a3bffffff7f
+    m_SelectedIDs: 1c5c0000
+    m_LastClickedID: 23580
+    m_ExpandedIDs: 00000000fa5b000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
