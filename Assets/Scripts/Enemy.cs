@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour
 		velocity = directionToTarget * speed; // still work
 		jumpTotal = jumpHeightAmount * jumpSpeed; // needed for jumping
 
-        //WhereToLook(velocity);
+		//WhereToLook(velocity);
 
 		/*float timer = 0;
         float raycastInterval = 1.5f;
@@ -179,17 +179,17 @@ public class Enemy : MonoBehaviour
         float distanceToPlayer = displacementFromTarget.magnitude; // distance of separation between objects
         //float distanceAI = enemyAgent.destination.magnitude;
         //float distanceAI = targetTransform.position.magnitude;
-        float stopDistance = enemyAgent.stoppingDistance;
+        float stopDistance = enemyAgent.stoppingDistance; // take the stopping distance 
 
 		enemyRigidbody.position += velocity * Time.deltaTime; // jump works when this is here... dunno why it needs to be here
         WhereToLook(velocity); // look towards the target. This works dunno why it needs to be here though
 
-		if (stopDistance > 0f /* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
+		if (stopDistance > 0f/* distanceToPlayer > 1.5f */) // check if player is away 1.5f. If yes then start chasing else stay 1.5f away
         {
-			
-			enemyAIMovement(); // call this method where AI movement is 
 
-            if(boostStatus)
+            enemyAIMovement(); // call this method where AI movement is
+
+            if (boostStatus)
             {
                 boostDuration += Time.deltaTime;
                 if(boostDuration >= 1)
@@ -203,11 +203,11 @@ public class Enemy : MonoBehaviour
 		if (targetTransform.position.y > 0.1f && inGround && distanceToPlayer <= 3f) // check if player is above ground and is 1.5f away so it only jump at that distance
 		{
 			inGround = false;
-			enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
+            enemyAgent.enabled = false; // disable navmeshagent since it conflicts with physics
 
 			if (enemyAgent.enabled == false && velocity != Vector3.zero) // if disabled then we use physics and rigidbody to jump
 			{
-                enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
+				enemyRigidbody.AddForce(jumpTotal, ForceMode.Impulse);
 			}
 		}
 
