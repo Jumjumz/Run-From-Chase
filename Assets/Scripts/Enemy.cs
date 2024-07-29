@@ -44,12 +44,7 @@ public class Enemy : MonoBehaviour
         {
             inGround = true;
             enemyAgent.enabled = true; // navmeshagent is enabled when enemy is in ground.. this has autopathing
-        }
-
-        if (checkCollision.gameObject.CompareTag("Wall") && boostStatus) // this needs to be here to avoid this shit from bouncing all the time
-        {
-            enemyRigidbody.AddForce(-velocity, ForceMode.Impulse);
-            Boost();
+            enemyRigidbody.isKinematic = false; // needs to be declared to avoid the falling world bug.. so far it is working
         }
             
     }
