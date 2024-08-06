@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 1761
-    y: 382
-    width: 321
+    x: 1806
+    y: 587
+    width: 261
     height: 573
   m_ShowMode: 0
   m_Title: ProBuilder
@@ -65,10 +65,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 321
+    width: 261
     height: 573
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 100, y: 121}
+  m_MaxSize: {x: 4000, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -92,7 +92,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 321
+    width: 261
     height: 573
   m_MinSize: {x: 100, y: 121}
   m_MaxSize: {x: 4000, y: 4021}
@@ -446,9 +446,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1761
-    y: 382
-    width: 321
+    x: 1806
+    y: 587
+    width: 261
     height: 552
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -931,9 +931,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.2950287, y: -2.4060578, z: -1.7379916}
+    m_Target: {x: -6.6125236, y: 4.295217, z: -5.809839}
     speed: 2
-    m_Value: {x: -4.2950287, y: -2.4060578, z: -1.7379916}
+    m_Value: {x: -6.6125236, y: 4.295217, z: -5.809839}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -979,13 +979,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.17122354, y: -0.6737291, z: 0.16487324, w: 0.69968635}
+    m_Target: {x: -0.3422198, y: 0.032278508, z: -0.011345496, w: -0.9389315}
     speed: 2
-    m_Value: {x: 0.17122589, y: -0.67373836, z: 0.1648755, w: 0.69969594}
+    m_Value: {x: -0.3422574, y: 0.030871967, z: -0.010832818, w: -0.9390364}
   m_Size:
-    m_Target: 9.68081
+    m_Target: 3.6775389
     speed: 2
-    m_Value: 9.68081
+    m_Value: 3.6775389
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 49}
+    scrollPos: {x: 0, y: 143}
     m_SelectedIDs: 6e5f0000
     m_LastClickedID: 24430
     m_ExpandedIDs: 00000000365f000000ca9a3bffffff7f
@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
