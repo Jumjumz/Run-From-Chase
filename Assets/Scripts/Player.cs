@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody playerRigidbody;
+    public Transform cam;
     public float speed;
     public float jumpSpeed;
     public float jumpHeight;
@@ -85,9 +86,11 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
+
             Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+
         }
 
         if (boostStatus) // check boostStatus wether true or false
