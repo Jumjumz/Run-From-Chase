@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour
     float boostDuration;
     Vector3 jumpHeightAmount;
     Vector3 velocity;
+    Vector3 input;
     bool inGround;
     bool boostStatus;
     // int coinCount;
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         velocity = input * speed;
         Vector3 jumpTotal = jumpHeightAmount * jumpSpeed;
         // Vector3 moveAmount = velocity * Time.deltaTime; // movement not in update instead in fixupdate
@@ -86,10 +89,13 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
+            float camAngle = Mathf.Atan2(input.x, input.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Vector3 camLook = Quaternion.Euler(0, camAngle, 0) * Vector3.forward; // can look on the direction but still cant move forward to that direction
 
-            Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
+            Quaternion toRotation = Quaternion.LookRotation(camLook, Vector3.up); // remember! as this is the code to rotate
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+
 
         }
 
