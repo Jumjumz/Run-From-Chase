@@ -66,7 +66,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        velocity = input * speed;
+		input = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * input;
+		velocity = input * speed;
         Vector3 jumpTotal = jumpHeightAmount * jumpSpeed;
         // Vector3 moveAmount = velocity * Time.deltaTime; // movement not in update instead in fixupdate
 
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void WhereToLook(Vector3 lookDirection)
+    void WhereToLook(Vector3 lookDirection) // separated a method for look rotation
     {
 		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
 
@@ -96,23 +97,9 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
-
             WhereToLook(velocity);
-
-            if(input.magnitude >= 0.1f)
-            {
-				float camAngle = Mathf.Atan2(input.x, input.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-				Vector3 camLook = Quaternion.Euler(0, camAngle, 0) * Vector3.forward; // can look on the direction but still cant move forward to that direction
-
-                velocity = camLook * speed;
-                    
-				Quaternion toRotation = Quaternion.LookRotation(camLook, Vector3.up); // remember! as this is the code to rotate
-
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
-                playerRigidbody.position += velocity * Time.deltaTime;
-			}
-
         }
+
 
         if (boostStatus) // check boostStatus wether true or false
         {
@@ -125,8 +112,20 @@ public class Player : MonoBehaviour
 
     }
 
+	private void OnApplicationFocus(bool focus)
+	{
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 
-    /* private void OnTriggerEnter(Collider triggerCollider) // for detecting non colliding objects like coin collecting games
+
+	/* private void OnTriggerEnter(Collider triggerCollider) // for detecting non colliding objects like coin collecting games
     * {
     *     if (triggerCollider.tag == "Coin")
     *    {
@@ -134,4 +133,5 @@ public class Player : MonoBehaviour
     *       coinCount++;
     *    } 
     } */
+
 }
