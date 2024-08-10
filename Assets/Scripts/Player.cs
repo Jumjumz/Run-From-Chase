@@ -81,6 +81,13 @@ public class Player : MonoBehaviour
 
     }
 
+    void WhereToLook(Vector3 lookDirection)
+    {
+		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
+
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+	}
+
 
     void FixedUpdate()
     {
@@ -89,13 +96,21 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
-            float camAngle = Mathf.Atan2(input.x, input.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Vector3 camLook = Quaternion.Euler(0, camAngle, 0) * Vector3.forward; // can look on the direction but still cant move forward to that direction
 
-            Quaternion toRotation = Quaternion.LookRotation(camLook, Vector3.up); // remember! as this is the code to rotate
+            WhereToLook(velocity);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+            if(input.magnitude >= 0.1f)
+            {
+				float camAngle = Mathf.Atan2(input.x, input.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+				Vector3 camLook = Quaternion.Euler(0, camAngle, 0) * Vector3.forward; // can look on the direction but still cant move forward to that direction
 
+                velocity = camLook * speed;
+                    
+				Quaternion toRotation = Quaternion.LookRotation(camLook, Vector3.up); // remember! as this is the code to rotate
+
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+                playerRigidbody.position += velocity * Time.deltaTime;
+			}
 
         }
 
