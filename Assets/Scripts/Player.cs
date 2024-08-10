@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-		input = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * input;
+		input = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * input; // change the input to mouse
 		velocity = input * speed;
         Vector3 jumpTotal = jumpHeightAmount * jumpSpeed;
         // Vector3 moveAmount = velocity * Time.deltaTime; // movement not in update instead in fixupdate
@@ -112,15 +112,15 @@ public class Player : MonoBehaviour
 
     }
 
-	private void OnApplicationFocus(bool focus)
+	private void OnApplicationFocus(bool focus) // to track cursor movement
 	{
         if (focus)
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked; // if focus lock the cam
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None; // needs to be here to update the state
         }
     }
 
