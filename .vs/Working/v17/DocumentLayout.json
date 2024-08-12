@@ -31,8 +31,7 @@
               "ViewState": "AQIAAGoAAAAAAAAAAAAcwHsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T18:28:53.916Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -42,7 +41,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "E:\\Unity\\Working\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAAAswGMAAAAiAAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAIwA8AAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T18:28:24.386Z",
               "EditorCaption": ""

@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
         boostStatus = false; // set status of player is boosting
         boostDuration = 0; // duration of boost
         normalSpeed = speed; // initialize the normal speed into the original speed
+        
     }
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
-            WhereToLook(velocity);
+            WhereToLook(velocity); // call the method
         }
 
 
