@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
-using Cinemachine;
 
 public class Player : MonoBehaviour
 {
     Rigidbody playerRigidbody;
     public Transform cam;
-    public CinemachineFreeLook cine;
     public float speed;
     public float jumpSpeed;
     public float jumpHeight;
@@ -31,15 +29,6 @@ public class Player : MonoBehaviour
         boostStatus = false; // set status of player is boosting
         boostDuration = 0; // duration of boost
         normalSpeed = speed; // initialize the normal speed into the original speed
-
-        if (cine != null)
-        {
-            cine.m_YAxis.Value = 0.5f;
-        }
-        else
-        {
-            print("Cinemachine camera not found");
-        }
     }
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
