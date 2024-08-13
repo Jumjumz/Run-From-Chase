@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider triggerBoost) // collider function. This is what it looks all the time except triggerBoost this shit is made up
     {
-        if (triggerBoost.tag == "Boost") // check the tag of the collider (make sure you create a tag first before doing this shit)
+        if (triggerBoost.tag.StartsWith("Boost")) // check the tag of the collider (make sure you create a tag first before doing this shit)
         {
             speed = boostSpeed; // assign speed value to boostSpeed in order to change the velocity
             boostStatus = true; // set true as we are boosting 
