@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     Vector3 slopeMoveDirection;
 	bool inGround;
     bool boostStatus;
-    bool onSlope;
     // int coinCount;
 
     private void Start()
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
         boostStatus = false; // set status of player is boosting
         boostDuration = 0; // duration of boost
         normalSpeed = speed; // initialize the normal speed into the original speed
-        onSlope = false;
     }
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
@@ -67,13 +65,19 @@ public class Player : MonoBehaviour
 
     void DownRayCast ()
     {
-        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected, transform.localScale.y * 0.5f + 0.3f);
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected);
 
     }
 
+	void WhereToLook(Vector3 lookDirection) // separated a method for look rotation
+	{
+		Quaternion toRotation = Quaternion.LookRotation(lookDirection, Vector3.up); // remember! as this is the code to rotate
 
-    // Update is called once per frame
-    void Update()
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 		input = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * input; // change the input to mouse
@@ -92,13 +96,6 @@ public class Player : MonoBehaviour
 
         DownRayCast();
     }
-
-    void WhereToLook(Vector3 lookDirection) // separated a method for look rotation
-    {
-		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
-
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
-	}
 
 
     void FixedUpdate()
