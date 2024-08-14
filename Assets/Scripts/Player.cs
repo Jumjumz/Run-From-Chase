@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public float jumpHeight;
     public float rotationSpeed;
     public float boostSpeed;
+    public float maxSlopeAngle;
     float normalSpeed;
     float boostDuration;
     Vector3 jumpHeightAmount;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     {
         if(checkCollision.gameObject.CompareTag("Ground")) // collision requires gameObject and comparetag to locate tags
         {
-            inGround = true; // check if we are in ground
+            inGround = true; // set inGround to true
         }
 
         if (checkCollision.gameObject.CompareTag("Wall") && boostStatus) // check if we hit Wall and we are currently boosting
@@ -59,6 +60,25 @@ public class Player : MonoBehaviour
         speed = normalSpeed;// return the speed to its original value which was assigned to normalSpeed                       
         boostDuration = 0; // set to 0 to restart the value
         boostStatus = false; // set to false as we are not boosting and to not have continouos boosting in game
+    }
+
+    void DownRayCast ()
+    {
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected, transform.localScale.y * 0.5f + 0.3f);
+
+        if (detectGround)
+        {
+            float angle = Vector3.Angle(Vector3.up, groundDetected.normal);
+
+            if(angle < maxSlopeAngle && angle != 0)
+            {
+				Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(velocity, groundDetected.normal).normalized;
+			}
+            
+        } else
+        {
+            detectGround = false;
+        }
     }
 
 
