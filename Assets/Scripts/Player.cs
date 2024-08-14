@@ -19,8 +19,10 @@ public class Player : MonoBehaviour
     Vector3 jumpHeightAmount;
     Vector3 velocity;
     Vector3 input;
-    bool inGround;
+    Vector3 slopeMoveDirection;
+	bool inGround;
     bool boostStatus;
+    bool onSlope;
     // int coinCount;
 
     private void Start()
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
         boostStatus = false; // set status of player is boosting
         boostDuration = 0; // duration of boost
         normalSpeed = speed; // initialize the normal speed into the original speed
+        onSlope = false;
     }
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
@@ -66,19 +69,6 @@ public class Player : MonoBehaviour
     {
         bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected, transform.localScale.y * 0.5f + 0.3f);
 
-        if (detectGround)
-        {
-            float angle = Vector3.Angle(Vector3.up, groundDetected.normal);
-
-            if(angle < maxSlopeAngle && angle != 0)
-            {
-				Vector3 slopeMoveDirection = Vector3.ProjectOnPlane(velocity, groundDetected.normal).normalized;
-			}
-            
-        } else
-        {
-            detectGround = false;
-        }
     }
 
 
@@ -100,6 +90,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
+        DownRayCast();
     }
 
     void WhereToLook(Vector3 lookDirection) // separated a method for look rotation
