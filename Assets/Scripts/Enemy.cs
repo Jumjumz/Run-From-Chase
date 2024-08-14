@@ -108,7 +108,6 @@ public class Enemy : MonoBehaviour
                 enemyRigidbody.position += velocity * Time.fixedDeltaTime; // change position with the new velocity
 
                 WhereToLook(velocity); // look direction with the new value of velocity*/
-                print("Detected");
             }
             
         }

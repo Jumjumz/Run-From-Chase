@@ -63,17 +63,25 @@ public class Player : MonoBehaviour
         boostStatus = false; // set to false as we are not boosting and to not have continouos boosting in game
     }
 
-    void DownRayCast ()
+    void DownRayCast()
     {
         bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected);
 
+        if(detectGround)
+        {
+            Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
+            Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
+
+            WhereToLook(lookRamp);
+        }
+
     }
 
-	void WhereToLook(Vector3 lookDirection) // separated a method for look rotation
+	void WhereToLook(Quaternion lookTowards) // separated a method for look rotation
 	{
-		Quaternion toRotation = Quaternion.LookRotation(lookDirection, Vector3.up); // remember! as this is the code to rotate
+		//Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
 
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime); // rotate towards the button press
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTowards, rotationSpeed * Time.deltaTime); // rotate towards the button press
 	}
 
 	// Update is called once per frame
@@ -105,7 +113,9 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero)
         {
-            WhereToLook(velocity); // call the method
+			Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);
+            // remember! as this is the code to rotate
+			WhereToLook(toRotation); // call the method
         }
 
 
