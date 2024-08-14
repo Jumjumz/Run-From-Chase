@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
-            Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
+            Quaternion lookRamp = Quaternion.Lerp(transform.rotation, targetLook, Time.deltaTime * 5f);
 
             WhereToLook(lookRamp);
         }
@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
-        DownRayCast();
+        //DownRayCast();
     }
 
 
