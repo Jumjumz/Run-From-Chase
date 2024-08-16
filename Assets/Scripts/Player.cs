@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 
     void DownRayCast()
     {
-        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected, rayMaxDistance + 0.3f);
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected, rayMaxDistance);
 
         if(detectGround)
         {

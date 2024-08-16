@@ -10519,6 +10519,7 @@ MonoBehaviour:
   rotationSpeed: 600
   boostSpeed: 14
   maxSlopeAngle: 89
+  rayMaxDistance: 0.8
 --- !u!54 &1672229680
 Rigidbody:
   m_ObjectHideFlags: 0
