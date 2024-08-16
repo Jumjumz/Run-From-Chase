@@ -22,15 +22,17 @@ public class Player : MonoBehaviour
     Vector3 slopeMoveDirection;
 	bool inGround;
     bool boostStatus;
-    // int coinCount;
+	RaycastHit groundDetected;
+	// int coinCount;
 
-    private void Start()
+	private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         jumpHeightAmount = new Vector3(0, jumpHeight, 0); // new vector for jumping where jumpHeight is the y value
         boostStatus = false; // set status of player is boosting
         boostDuration = 0; // duration of boost
         normalSpeed = speed; // initialize the normal speed into the original speed
+
     }
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
 
     void DownRayCast()
     {
-        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out RaycastHit groundDetected);
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
 
         if(detectGround)
         {
@@ -116,7 +118,7 @@ public class Player : MonoBehaviour
         playerRigidbody.position += velocity * Time.deltaTime; // probably the correct way of movement since it has collission
 
         // condition for moving towards certain angle of directions
-        if (velocity != Vector3.zero)
+        if (groundDetected.normal == Vector3.up)
         {
 			Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);
             // remember! as this is the code to rotate
