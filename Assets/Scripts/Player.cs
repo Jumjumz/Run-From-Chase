@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     public float rotationSpeed;
     public float boostSpeed;
     public float maxSlopeAngle;
-    float normalSpeed;
+	public float rayMaxDistance;
+	float normalSpeed;
     float boostDuration;
     Vector3 jumpHeightAmount;
     Vector3 velocity;
@@ -67,7 +68,7 @@ public class Player : MonoBehaviour
 
     void DownRayCast()
     {
-        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected, rayMaxDistance + 0.3f);
 
         if(detectGround)
         {
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour
 
     void moveDirection() // created a method for movement direction
     {
-		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);// remember! as this is the code to rotate
+		Quaternion toRotation = Quaternion.LookRotation(velocity, groundDetected.normal);// remember! as this is the code to rotate
 
 		WhereToLook(toRotation); // call the method
 	}
