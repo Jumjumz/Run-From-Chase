@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     public float rotationSpeed;
     public float boostSpeed;
     public float maxSlopeAngle;
-	public float rayMaxDistance;
 	float normalSpeed;
     float boostDuration;
     Vector3 jumpHeightAmount;
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour
 
     void DownRayCast()
     {
-        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected, rayMaxDistance);
+        bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
 
         if(detectGround)
         {
