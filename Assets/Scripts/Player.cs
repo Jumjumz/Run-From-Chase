@@ -71,12 +71,14 @@ public class Player : MonoBehaviour
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
+            //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
             print(groundDetected.normal);
 
             if(groundDetected.normal != Vector3.up)
             {
-				WhereToLook(targetLook);
+                //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
+                WhereToLook(targetLook);
 			}	
  
         }
