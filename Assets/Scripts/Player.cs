@@ -93,9 +93,9 @@ public class Player : MonoBehaviour
 
     void moveDirection() // created a method for movement direction
     {
-			Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);
-			// remember! as this is the code to rotate
-			WhereToLook(toRotation); // call the method
+		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);// remember! as this is the code to rotate
+
+		WhereToLook(toRotation); // call the method
 	}
 
 	// Update is called once per frame
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (groundDetected.normal == Vector3.up) // used to be velocity != Vector3.zero
         {
-            moveDirection();
+            moveDirection(); //call the method
         }
 
         if (boostStatus) // check boostStatus wether true or false
