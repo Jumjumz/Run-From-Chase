@@ -91,6 +91,17 @@ public class Player : MonoBehaviour
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTowards, rotationSpeed * Time.deltaTime); // rotate towards the button press
 	}
 
+    void moveDirection() // created a method for movement direction
+    {
+		// condition for moving towards certain angle of directions
+		if (groundDetected.normal == Vector3.up) // used to be velocity != Vector3.zero
+		{
+			Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);
+			// remember! as this is the code to rotate
+			WhereToLook(toRotation); // call the method
+		}
+	}
+
 	// Update is called once per frame
 	void Update()
     {
@@ -117,14 +128,7 @@ public class Player : MonoBehaviour
     {
         playerRigidbody.position += velocity * Time.deltaTime; // probably the correct way of movement since it has collission
 
-        // condition for moving towards certain angle of directions
-        if (groundDetected.normal == Vector3.up)
-        {
-			Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);
-            // remember! as this is the code to rotate
-			WhereToLook(toRotation); // call the method
-        }
-
+        moveDirection();
 
         if (boostStatus) // check boostStatus wether true or false
         {
