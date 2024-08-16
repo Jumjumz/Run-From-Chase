@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     public float jumpHeight;
     public float rotationSpeed;
     public float boostSpeed;
-    public float maxSlopeAngle;
 	float normalSpeed;
     float boostDuration;
     Vector3 jumpHeightAmount;
