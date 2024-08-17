@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
+            Vector3 faceDirection = velocity;
+            Vector3 slopeForward = targetLook * faceDirection;
+            Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal);
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
             print(groundDetected.normal);
@@ -78,7 +81,8 @@ public class Player : MonoBehaviour
             if(groundDetected.normal != Vector3.up)
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
-                WhereToLook(targetLook);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10);
+                //WhereToLook(targetLook);
 			}	
  
         }
@@ -117,7 +121,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
-       DownRayCast();
+       DownRayCast(); // call this method
     }
 
 
