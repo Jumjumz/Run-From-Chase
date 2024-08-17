@@ -72,9 +72,8 @@ public class Player : MonoBehaviour
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
-            Vector3 faceDirection = velocity;
-            Vector3 slopeForward = targetLook * faceDirection; // multiply
-            Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal); // create a new rotation
+            //Vector3 slopeForward = targetLook * velocity; // multiply
+            //Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
             print(groundDetected.normal);
@@ -82,8 +81,8 @@ public class Player : MonoBehaviour
             if(groundDetected.normal != Vector3.up)
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
-                //WhereToLook(targetLook);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
+                WhereToLook(targetLook);
 			}	
  
         }
@@ -99,7 +98,7 @@ public class Player : MonoBehaviour
 
     void moveDirection() // created a method for movement direction
     {
-		Quaternion toRotation = Quaternion.LookRotation(velocity, groundDetected.normal);// remember! as this is the code to rotate
+		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);// remember! as this is the code to rotate
 
 		WhereToLook(toRotation); // call the method
 	}
@@ -122,7 +121,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
-       DownRayCast(); // call this method
+       //DownRayCast(); // call this method
     }
 
 
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour
 
 
         // condition for moving towards certain angle of directions
-        if (groundDetected.normal == Vector3.up) // used to be velocity != Vector3.zero
+        if (velocity != Vector3.zero) // used to be velocity != Vector3.zero
         {
             moveDirection(); //call the method
         }
