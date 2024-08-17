@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
         boostStatus = false; // set to false as we are not boosting and to not have continouos boosting in game
     }
 
+    // not finished as player rotation restes at global axis
     void DownRayCast()
     {
         bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
@@ -72,8 +73,8 @@ public class Player : MonoBehaviour
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
             Vector3 faceDirection = velocity;
-            Vector3 slopeForward = targetLook * faceDirection;
-            Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal);
+            Vector3 slopeForward = targetLook * faceDirection; // multiply
+            Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
             print(groundDetected.normal);
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
             if(groundDetected.normal != Vector3.up)
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
                 //WhereToLook(targetLook);
 			}	
  
