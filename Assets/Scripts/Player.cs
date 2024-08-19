@@ -13,18 +13,18 @@ public class Player : MonoBehaviour
     public float jumpHeight;
     public float rotationSpeed;
     public float boostSpeed;
-	float normalSpeed;
+    float normalSpeed;
     float boostDuration;
     Vector3 jumpHeightAmount;
     Vector3 velocity;
     Vector3 input;
     Vector3 slopeMoveDirection;
-	bool inGround;
+    bool inGround;
     bool boostStatus;
-	RaycastHit groundDetected;
-	// int coinCount;
+    RaycastHit groundDetected;
+    // int coinCount;
 
-	private void Start()
+    private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         jumpHeightAmount = new Vector3(0, jumpHeight, 0); // new vector for jumping where jumpHeight is the y value
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision checkCollision) // check collision for the ground to avoid double jumping issue
     {
-        if(checkCollision.gameObject.CompareTag("Ground")) // collision requires gameObject and comparetag to locate tags
+        if (checkCollision.gameObject.CompareTag("Ground")) // collision requires gameObject and comparetag to locate tags
         {
             inGround = true; // set inGround to true
         }
@@ -69,43 +69,49 @@ public class Player : MonoBehaviour
     {
         bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
 
-        if(detectGround)
+        if (detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
             Vector3 slopeForward = targetLook * movement; // multiply
-            Quaternion newRotation = Quaternion.LookRotation(slopeForward, Vector3.up); // create a new rotation
+            //Quaternion newRotation = Quaternion.LookRotation(slopeForward, Vector3.up); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
 
-            if(groundDetected.normal != Vector3.up) // rotate parallel to the slope
+            if (groundDetected.normal != Vector3.up) // rotate parallel to the slope
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
 
-                if(input != Vector3.zero) // remove weird behavior where player rotation resets to global cartesian plane
+                if (input != Vector3.zero) // remove weird behavior where player rotation resets to global cartesian plane
                 {
-					//WhereToLook(newRotation);
-					transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime); // new transform rotation that uses slerp
-				}
-                
-			}	
- 
+                    //WhereToLook(newRotation);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, ToRotation(slopeForward), rotationSpeed * Time.deltaTime); // new transform rotation that uses slerp
+                }
+
+            }
+
         }
 
     }
 
-	void WhereToLook(Quaternion lookTowards) // separated a method for look rotation
-	{
-		//Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
-
-		transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTowards, rotationSpeed * Time.deltaTime); // rotate towards the button press
-	}
-
-    void moveDirection(Vector3 movement) // created a method for movement direction
+    void WhereToLook(Quaternion lookTowards) // separated a method for look rotation
     {
-		Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);// remember! as this is the code to rotate
+        //Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up); // remember! as this is the code to rotate
 
-		WhereToLook(toRotation); // call the method
-	}
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTowards, rotationSpeed * Time.deltaTime); // rotate towards the button press
+    }
+
+    void moveDirection(Quaternion toRotation) // created a method for movement direction
+    {
+        toRotation = Quaternion.LookRotation(velocity, Vector3.up);// remember! as this is the code to rotate
+
+        WhereToLook(toRotation); // call the method
+    }
+
+    Quaternion ToRotation(Vector3 movement)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+        return toRotation;
+    }
 
 	// Update is called once per frame
 	void Update()
@@ -137,7 +143,8 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero) // used to be velocity != Vector3.zero
         {
-            moveDirection(velocity); //call the method
+            moveDirection(ToRotation(velocity)); //call the method
+            //moveDirection();
         }
 
         if (boostStatus) // check boostStatus wether true or false
