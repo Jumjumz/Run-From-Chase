@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
                 if(input != Vector3.zero) // remove weird behavior where player rotation resets to global cartesian plane
                 {
 					//WhereToLook(newRotation);
-					transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
+					transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime); // new transform rotation that uses slerp
 				}
                 
 			}	
