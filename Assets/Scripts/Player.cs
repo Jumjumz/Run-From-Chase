@@ -72,8 +72,8 @@ public class Player : MonoBehaviour
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
-            //Vector3 slopeForward = targetLook * velocity; // multiply
-            //Quaternion newRotation = Quaternion.LookRotation(slopeForward, groundDetected.normal); // create a new rotation
+            Vector3 slopeForward = targetLook * velocity; // multiply
+            Quaternion newRotation = Quaternion.LookRotation(slopeForward, Vector3.up); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
             print(groundDetected.normal);
@@ -82,7 +82,12 @@ public class Player : MonoBehaviour
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
                 //transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
-                WhereToLook(targetLook);
+
+                if(input != Vector3.zero) // remove weird behavior where player rotation resets to global cartesian plane
+                {
+					WhereToLook(newRotation);
+				}
+                
 			}	
  
         }
@@ -121,7 +126,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
-       //DownRayCast(); // call this method
+       DownRayCast(); // call this method
     }
 
 
