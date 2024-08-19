@@ -76,16 +76,15 @@ public class Player : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(slopeForward, Vector3.up); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
-            print(groundDetected.normal);
 
-            if(groundDetected.normal != Vector3.up)
+            if(groundDetected.normal != Vector3.up) // rotate parallel to the slope
             {
                 //transform.rotation = Quaternion.RotateTowards(rotateHere, targetLook, rotationSpeed * Time.deltaTime);
-                //transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
 
                 if(input != Vector3.zero) // remove weird behavior where player rotation resets to global cartesian plane
                 {
-					WhereToLook(newRotation);
+					//WhereToLook(newRotation);
+					transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.fixedDeltaTime * 10); // new transform rotation that uses slerp
 				}
                 
 			}	
