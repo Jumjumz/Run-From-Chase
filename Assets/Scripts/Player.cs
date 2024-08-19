@@ -65,14 +65,14 @@ public class Player : MonoBehaviour
     }
 
     // not finished as player rotation restes at global axis
-    void DownRayCast()
+    void SlopeMovement(Vector3 movement)
     {
         bool detectGround = Physics.Raycast(transform.position, Vector3.down, out groundDetected);
 
         if(detectGround)
         {
             Quaternion targetLook = Quaternion.FromToRotation(Vector3.up, groundDetected.normal);
-            Vector3 slopeForward = targetLook * velocity; // multiply
+            Vector3 slopeForward = targetLook * movement; // multiply
             Quaternion newRotation = Quaternion.LookRotation(slopeForward, Vector3.up); // create a new rotation
             //Quaternion rotateHere = Quaternion.LookRotation(velocity, groundDetected.normal);
             //Quaternion lookRamp = Quaternion.Slerp(transform.rotation, targetLook, Time.deltaTime * 5f);
@@ -100,9 +100,9 @@ public class Player : MonoBehaviour
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTowards, rotationSpeed * Time.deltaTime); // rotate towards the button press
 	}
 
-    void moveDirection() // created a method for movement direction
+    void moveDirection(Vector3 movement) // created a method for movement direction
     {
-		Quaternion toRotation = Quaternion.LookRotation(velocity, Vector3.up);// remember! as this is the code to rotate
+		Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);// remember! as this is the code to rotate
 
 		WhereToLook(toRotation); // call the method
 	}
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized; // shortcut style.. vectors needs to be normalized when moving
 		input = Quaternion.AngleAxis(cam.rotation.eulerAngles.y, Vector3.up) * input; // change the input to mouse
 		velocity = input * speed;
         Vector3 jumpTotal = jumpHeightAmount * jumpSpeed;
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
             inGround = false; // make this variable false since it is not in ground anymore
         }
 
-       DownRayCast(); // call this method
+       SlopeMovement(velocity); // call this method
     }
 
 
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         // condition for moving towards certain angle of directions
         if (velocity != Vector3.zero) // used to be velocity != Vector3.zero
         {
-            moveDirection(); //call the method
+            moveDirection(velocity); //call the method
         }
 
         if (boostStatus) // check boostStatus wether true or false
