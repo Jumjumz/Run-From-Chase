@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         WhereToLook(toRotation); // call the method
     }
 
-    Quaternion ToRotation(Vector3 movement)
+    Quaternion ToRotation(Vector3 movement) // separate method for lookrotation
     {
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
         return toRotation;
