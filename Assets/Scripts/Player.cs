@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         {
             speed = boostSpeed; // assign speed value to boostSpeed in order to change the velocity
             boostStatus = true; // set true as we are boosting 
+            
         }
     }
 

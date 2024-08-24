@@ -22,7 +22,15 @@ public class Boost : MonoBehaviour
 		// InvokeRepeating("SpawnBoost", 5f, spawnInterval); // spawn every frame
 	}
 
-    void SpawnBoost()
+	private void OnTriggerEnter(Collider triggerBoost) // collider function. This is what it looks all the time except triggerBoost this shit is made up
+	{
+		if (triggerBoost.tag.StartsWith("Player")) // check the tag of the collider (make sure you create a tag first before doing this shit)
+		{
+            Destroy(boostSpawner);
+		}
+	}
+
+	void SpawnBoost()
     {
         Vector3 spwanPosition = new Vector3(Random.Range(-spawnAreaSize, spawnHeight), spawnHeight, Random.Range(-spawnAreaSize, spawnAreaSize));
 
