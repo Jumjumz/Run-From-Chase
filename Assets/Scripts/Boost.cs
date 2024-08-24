@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// NOTE: DONT SET spawnInterval and spawnTime to zero if you dont want your pc lagged or hanging xD
+// NOTE: DONT SET spawnInterval and spawnTime to zero if you dont want your pc lagging or hanging xD
 public class Boost : MonoBehaviour
 {
     public GameObject boostSpawner;
