@@ -3526,7 +3526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361802501}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00856438, y: 0.00000001720575, z: 1.47362e-10, w: 0.99996334}
+  m_LocalRotation: {x: -0.00856436, y: -0.00000001720575, z: -1.4736165e-10, w: 0.99996334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7209,7 +7209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00856436, y: 0.00000001720575, z: 1.4736164e-10, w: 0.99996334}
+  m_LocalRotation: {x: -0.00856438, y: -0.00000001720575, z: -1.47362e-10, w: 0.99996334}
   m_LocalPosition: {x: 0, y: 0.42, z: -26.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9833,10 +9833,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostSpawner: {fileID: 1392353874}
-  spawnAreaSize: 20
+  spawnAreaSize: 40
   spawnHeight: 0
-  spawnInterval: 50
-  spawnTime: 650
+  spawnInterval: 30
+  spawnTime: 30
 --- !u!43 &1520470504
 Mesh:
   m_ObjectHideFlags: 0
@@ -11888,7 +11888,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2094781138}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00856436, y: 0.00000001720575, z: 1.4736165e-10, w: 0.99996334}
+  m_LocalRotation: {x: -0.00856438, y: -0.00000001720575, z: -1.47362e-10, w: 0.99996334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
