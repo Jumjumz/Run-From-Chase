@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "E:\\Unity\\Working\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|e:\\unity\\working\\assets\\scripts\\boost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\boost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|E:\\Unity\\Working\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|e:\\unity\\working\\assets\\scripts\\boost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\boost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{82B826F6-3347-D765-24E5-CBEC6CA6B8F8}|Assembly-CSharp.csproj|E:\\Unity\\Working\\assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -39,25 +39,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Player.cs",
               "DocumentMoniker": "E:\\Unity\\Working\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "E:\\Unity\\Working\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AQIAACIAAAAAAAAAAAAgwDMAAAACAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAsAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-12T18:28:24.386Z"
+              "WhenOpened": "2024-06-12T18:28:24.386Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Boost.cs",
               "DocumentMoniker": "E:\\Unity\\Working\\Assets\\Scripts\\Boost.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Boost.cs",
               "ToolTip": "E:\\Unity\\Working\\Assets\\Scripts\\Boost.cs",
               "RelativeToolTip": "Assets\\Scripts\\Boost.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAABOAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAowCgAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T13:17:33.12Z",
               "EditorCaption": ""

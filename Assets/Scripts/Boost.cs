@@ -40,8 +40,9 @@ public class Boost : MonoBehaviour
 
 	void SpawnBoost()
     {
-        Vector3 spwanPosition = new Vector3(Random.Range(-spawnAreaSize, spawnHeight), spawnHeight, Random.Range(-spawnAreaSize, spawnAreaSize));
+        Vector3 spwanPosition = new Vector3(Random.Range(-spawnAreaSize, spawnHeight), spawnHeight, Random.Range(-spawnAreaSize, spawnAreaSize)); // just a vector
 
-        Instantiate(boostSpawner, spwanPosition, Quaternion.identity);
+        Instantiate(boostSpawner, spwanPosition, Quaternion.identity); // this is how it is
     }
+
 }
